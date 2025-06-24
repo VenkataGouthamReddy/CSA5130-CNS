@@ -1,0 +1,20 @@
+# Input from user
+plaintext = input("Enter the text to encrypt: ").upper()
+key = input("Enter the keyword: ").upper()
+
+alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+ciphertext = ''
+
+key_index = 0
+key_length = len(key)
+
+for char in plaintext:
+    if char in alphabet:
+        shift = ord(key[key_index % key_length]) - ord('A')
+        encrypted_char = chr((ord(char) - ord('A') + shift) % 26 + ord('A'))
+        ciphertext += encrypted_char
+        key_index += 1
+    else:
+        ciphertext += char  # preserve spaces and punctuation
+
+print("Encrypted text:", ciphertext)
