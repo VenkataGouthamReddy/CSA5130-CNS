@@ -1,0 +1,63 @@
+# Keyword for the Playfair matrix
+keyword = "MONARCHY"
+
+# Create matrix
+matrix = []
+seen = []
+alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"  # 'J' is combined with 'I'
+
+for char in keyword.upper():
+    if char not in seen and char in alphabet:
+        seen.append(char)
+
+for char in alphabet:
+    if char not in seen:
+        seen.append(char)
+
+for i in range(5):
+    matrix.append(seen[i*5:(i+1)*5])
+
+# Input plaintext
+text = input("Enter plaintext: ").upper().replace('J', 'I')
+plaintext = ""
+
+# Prepare digraphs
+i = 0
+while i < len(text):
+    a = text[i]
+    b = text[i+1] if i+1 < len(text) else 'X'
+    if a == b:
+        plaintext += a + 'X'
+        i += 1
+    else:
+        plaintext += a + b
+        i += 2
+if len(plaintext) % 2 != 0:
+    plaintext += 'X'
+
+# Encryption
+ciphertext = ""
+i = 0
+while i < len(plaintext):
+    a = plaintext[i]
+    b = plaintext[i+1]
+
+    for row in matrix:
+        if a in row:
+            row_a, col_a = matrix.index(row), row.index(a)
+        if b in row:
+            row_b, col_b = matrix.index(row), row.index(b)
+
+    if row_a == row_b:
+        ciphertext += matrix[row_a][(col_a + 1) % 5]
+        ciphertext += matrix[row_b][(col_b + 1) % 5]
+    elif col_a == col_b:
+        ciphertext += matrix[(row_a + 1) % 5][col_a]
+        ciphertext += matrix[(row_b + 1) % 5][col_b]
+    else:
+        ciphertext += matrix[row_a][col_b]
+        ciphertext += matrix[row_b][col_a]
+
+    i += 2
+
+print("Encrypted text:", ciphertext)
