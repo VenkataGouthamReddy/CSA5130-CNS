@@ -1,0 +1,14 @@
+text = input("Enter plaintext (uppercase letters only): ")
+a = 5  # example value (must be coprime with 26)
+b = 8  # example value
+
+cipher = ""
+for char in text:
+    if char.isalpha():
+        p = ord(char.upper()) - ord('A')
+        c = (a * p + b) % 26
+        cipher += chr(c + ord('A'))
+    else:
+        cipher += char
+
+print("Encrypted text:", cipher)
