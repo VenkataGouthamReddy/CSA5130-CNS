@@ -1,0 +1,21 @@
+# Plaintext to be encrypted
+plaintext = input("Enter the text to encrypt: ")
+
+# Define a simple monoalphabetic key (must be 26 unique lowercase letters)
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+key      = 'qwertyuiopasdfghjklzxcvbnm'  # example substitution key
+
+ciphertext = ''
+
+for char in plaintext:
+    if char.isalpha():
+        if char.islower():
+            index = alphabet.index(char)
+            ciphertext += key[index]
+        else:
+            index = alphabet.index(char.lower())
+            ciphertext += key[index].upper()
+    else:
+        ciphertext += char
+
+print("Encrypted text:", ciphertext)
