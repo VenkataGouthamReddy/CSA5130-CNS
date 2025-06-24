@@ -1,0 +1,16 @@
+plaintext = input("Enter the message: ")
+k = int(input("Enter the shift value (1-25): "))
+
+ciphertext = ""
+
+for char in plaintext:
+    if char.isupper():
+        shifted = chr((ord(char) - ord('A') + k) % 26 + ord('A'))
+        ciphertext += shifted
+    elif char.islower():
+        shifted = chr((ord(char) - ord('a') + k) % 26 + ord('a'))
+        ciphertext += shifted
+    else:
+        ciphertext += char  # Keep punctuation, spaces, etc.
+
+print("Encrypted message:", ciphertext)
